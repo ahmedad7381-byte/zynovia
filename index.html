@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Zynovia — معرض أعمال ثلاثي الأبعاد</title>
+  <meta name="description" content="موقع شخصي جاهز لعرض الأعمال بخاصية ثلاثية الأبعاد، مع أقسام About Me و Zynovia Services و العروض الجديدة." />
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800;900&display=swap" rel="stylesheet"/>
+  <style>
+    :root{
+      --bg:#0b0f17; /* خلفية داكنة */
+      --bg2:#0e1420;
+      --txt:#e8ecf1; /* نص */
+      --muted:#a7b0bd;
+      --brand:#7c4dff; /* بنفسجي */
+      --brand2:#00e5ff; /* فيروزي */
+      --card:#101723cc; /* زجاجي */
+      --border:#2a3342;
+      --radius:20px;
+      --shadow:0 20px 40px rgba(0,0,0,.35);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; font-family:"Cairo", system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif; color:var(--txt);
+      background: radial-gradient(1200px 700px at 80% -10%, rgba(124,77,255,.18), transparent),
+                  radial-gradient(900px 600px at -10% 20%, rgba(0,229,255,.15), transparent),
+                  linear-gradient(180deg, var(--bg), var(--bg2));
+      overflow-x:hidden;
+    }
+    a{color:inherit; text-decoration:none}
+    .container{width:min(1200px, 92%); margin-inline:auto}
+    /* NAV */
+    header{position:sticky; top:0; z-index:50; backdrop-filter: blur(10px); background:rgba(10,14,22,.55); border-bottom:1px solid var(--border)}
+    .nav{display:flex; align-items:center; justify-content:space-between; padding:14px 0}
+    .brand{display:flex; gap:10px; align-items:center}
+    .logo{
+      width:42px; height:42px; border-radius:14px; position:relative; isolation:isolate; overflow:hidden; box-shadow:var(--shadow);
+      background: conic-gradient(from 180deg, var(--brand), var(--brand2) 45%, #19ffb6 75%, var(--brand));
+    }
+    .logo::after{content:""; position:absolute; inset:3px; border-radius:10px; background:linear-gradient(180deg, #121a27, #0e1420)}
+    .brand h1{font-size:20px; letter-spacing:.5px; margin:0; font-weight:800}
+    nav ul{display:flex; gap:12px; list-style:none; margin:0; padding:0}
+    .btn{padding:10px 14px; border:1px solid var(--border); border-radius:12px; background:linear-gradient(180deg, #121a27aa, #0f1622aa); color:var(--txt); cursor:pointer; transition:.2s transform ease, .2s box-shadow ease}
+    .btn:hover{transform:translateY(-2px); box-shadow:0 10px 20px rgba(124,77,255,.15)}
+    .btn.brand{border-color:transparent; background:linear-gradient(135deg, var(--brand), var(--brand2)); color:#071018; font-weight:800}
+    /* HERO */
+    .hero{position:relative; padding:64px 0 32px}
+    .split{display:grid; grid-template-columns:1.2fr .8fr; align-items:center; gap:28px}
+    .title{font-size:40px; line-height:1.15; margin:0 0 14px; font-weight:900}
+    .lead{color:var(--muted); margin:0 0 20px}
+    .cta{display:flex; gap:10px; flex-wrap:wrap}
+    /* 3D Scene */
+    .scene{height:360px; perspective:1000px}
+    .cube{width:220px; height:220px; position:relative; transform-style:preserve-3d; animation:spin 14s linear infinite; margin:0 auto}
+    .cube .face{position:absolute; inset:0; background:linear-gradient(135deg, rgba(124,77,255,.75), rgba(0,229,255,.75)); border:1px solid #6e7aa6; border-radius:18px; backdrop-filter: blur(4px);}
+    .cube .face::after{content:"Zynovia"; position:absolute; inset:0; display:grid; place-items:center; font-weight:900; color:#0a0f17; font-size:28px; letter-spacing:1px}
+    .f1{transform: translateZ(110px)}
+    .f2{transform: rotateY(90deg) translateZ(110px)}
+    .f3{transform: rotateY(180deg) translateZ(110px)}
+    .f4{transform: rotateY(-90deg) translateZ(110px)}
+    .f5{transform: rotateX(90deg) translateZ(110px)}
+    .f6{transform: rotateX(-90deg) translateZ(110px)}
+    @keyframes spin{from{transform:rotateX(-18deg) rotateY(0)} to{transform:rotateX(-18deg) rotateY(360deg)}}
+
+    /* Sections */
+    section{padding:56px 0; scroll-margin-top:90px}
+    .section-title{font-size:28px; margin:0 0 18px; font-weight:800}
+    .grid{display:grid; gap:16px}
+    .g-3{grid-template-columns:repeat(3, minmax(0,1fr))}
+    .g-2{grid-template-columns:repeat(2, minmax(0,1fr))}
+    .card{background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:18px; box-shadow:var(--shadow); position:relative; overflow:hidden}
+    .card::before{content:""; position:absolute; inset:-1px; background:radial-gradient(400px 200px at 80% -10%, rgba(124,77,255,.18), transparent); pointer-events:none}
+    .h{margin:0 0 6px; font-weight:800}
+    .muted{color:var(--muted)}
+
+    /* 3D Tilt */
+    .tilt{transform-style:preserve-3d; transition: transform .12s ease}
+    .tilt .pop{transform:translateZ(28px)}
+
+    /* Gallery */
+    .gallery{display:grid; grid-template-columns:repeat(auto-fill, minmax(240px,1fr)); gap:16px}
+    .work{position:relative; border-radius:16px; overflow:hidden; border:1px solid var(--border); background:#0c131e}
+    .work img, .work video{width:100%; height:220px; object-fit:cover; display:block}
+    .work .meta{padding:12px 14px}
+    .work h4{margin:0 0 6px; font-size:16px}
+    .work p{margin:0; color:var(--muted); font-size:14px}
+    .chip{display:inline-block; padding:6px 10px; border-radius:999px; background:linear-gradient(135deg, rgba(124,77,255,.18), rgba(0,229,255,.18)); border:1px solid var(--border); font-size:12px}
+
+    /* Admin Tools */
+    .admin{margin-top:14px; display:grid; gap:10px}
+    .row{display:flex; gap:10px; flex-wrap:wrap}
+    input[type="text"], textarea{
+      width:100%; padding:10px 12px; border-radius:12px; border:1px solid var(--border); background:#0f1622; color:var(--txt);
+    }
+    input[type="file"]{accent-color:var(--brand)}
+    .inline{display:flex; gap:8px; align-items:center}
+
+    /* Footer */
+    footer{padding:36px 0; border-top:1px solid var(--border); color:var(--muted)}
+
+    /* Responsive */
+    @media (max-width: 980px){.split{grid-template-columns:1fr}.scene{height:300px}.title{font-size:34px}}
+    @media (max-width: 640px){.g-3{grid-template-columns:1fr}.g-2{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+  <!-- 💠 NAVBAR -->
+  <header>
+    <div class="container nav">
+      <div class="brand">
+        <div class="logo" aria-hidden="true"></div>
+        <h1>Zynovia</h1>
+      </div>
+      <nav aria-label="الملاحة">
+        <ul>
+          <li><a class="btn" href="#about">About Me</a></li>
+          <li><a class="btn" href="#services">Zynovia Services</a></li>
+          <li><a class="btn" href="#offers">العروض الجديدة</a></li>
+          <li><a class="btn brand" href="#portfolio">أعمالي</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- 🌌 HERO -->
+  <section class="hero container">
+    <div class="split">
+      <div class="tilt card">
+        <h2 class="title pop">موقع جاهز لعرض أعمالك — ثلاثي الأبعاد ✨</h2>
+        <p class="lead pop">ارفع أعمالك مباشرة داخل الصفحة بدون أي تعديل برمجي. تصفّح الأقسام: <strong>About Me</strong>، <strong>Zynovia Services</strong>، و<strong>العروض الجديدة</strong>.</p>
+        <div class="cta pop">
+          <a href="#portfolio" class="btn brand">ارفع أعمالك الآن</a>
+          <a href="#offers" class="btn">تصفح العروض</a>
+        </div>
+        <p class="muted pop" style="margin-top:10px">يمكنك أيضاً تصدير واستيراد بيانات المعرض كملف <b>portfolio.json</b>—كل ذلك بدون تعديل الكود.</p>
+      </div>
+      <div class="scene">
+        <div class="cube" aria-hidden="true">
+          <div class="face f1"></div>
+          <div class="face f2"></div>
+          <div class="face f3"></div>
+          <div class="face f4"></div>
+          <div class="face f5"></div>
+          <div class="face f6"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 👤 ABOUT -->
+  <section id="about" class="container">
+    <h3 class="section-title">About Me — نبذة عني</h3>
+    <div class="grid g-2">
+      <div class="card tilt">
+        <h4 class="h pop">أحمد — مدير علامة Zynovia</h4>
+        <p class="muted pop">أعمل في التسويق والمبيعات وبناء العلامات التجارية. هذا الموقع منصة بسيطة وسريعة لعرض أعمالي وخدماتي الرقمية.</p>
+      </div>
+      <div class="card tilt">
+        <h4 class="h pop">ما الذي أقدّمه؟</h4>
+        <p class="muted pop">تصميم شعارات ثلاثية الأبعاد، متاجر إلكترونية خفيفة، إدارة حملات، ونماذج عرض Mockups لتيشيرتات وأكواب ومنتجات متنوعة.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 🛠️ SERVICES -->
+  <section id="services" class="container">
+    <h3 class="section-title">Zynovia Services — خدمات زينوفيا</h3>
+    <div class="grid g-3">
+      <div class="tilt card">
+        <span class="chip pop">Branding</span>
+        <h4 class="h pop">بناء الهوية والشعار 3D</h4>
+        <p class="muted pop">هوية مرئية عصرية + نماذج ثلاثية الأبعاد للاستخدام على الويب والسوشيال.</p>
+      </div>
+      <div class="tilt card">
+        <span class="chip pop">Web</span>
+        <h4 class="h pop">مواقع سريعة بملف واحد</h4>
+        <p class="muted pop">مواقع خفيفة بدون إطار عمل، محسّنة للأداء، مع تأثيرات ثلاثية الأبعاد.</p>
+      </div>
+      <div class="tilt card">
+        <span class="chip pop">Marketing</span>
+        <h4 class="h pop">إعلانات ومحتوى جذاب</h4>
+        <p class="muted pop">حملات ذكية + نصوص جاهزة + قوالب موك‌آب للبيع.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 🎁 OFFERS -->
+  <section id="offers" class="container">
+    <h3 class="section-title">العروض الجديدة</h3>
+    <div class="grid g-3">
+      <div class="tilt card">
+        <h4 class="h pop">باقة ستارت أب</h4>
+        <p class="muted pop">شعار 3D + صفحة هبوط + 5 تصاميم سوشيال. <b>خصم 25%</b> هذا الشهر.</p>
+      </div>
+      <div class="tilt card">
+        <h4 class="h pop">موك‌آب احترافي للمتاجر</h4>
+        <p class="muted pop">10 نماذج تيشيرت + 10 أكواب + 5 بوسترات. جاهزة للعرض والبيع.</p>
+      </div>
+      <div class="tilt card">
+        <h4 class="h pop">إدارة إعلانات</h4>
+        <p class="muted pop">إدارة ميزانية حتى 500$ مع تقارير أسبوعية ولوحة نتائج مبسطة.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 🖼️ PORTFOLIO -->
+  <section id="portfolio" class="container">
+    <h3 class="section-title">أعمالي — Portfolio</h3>
+
+    <!-- أدوات بدون أي تعديل للكود -->
+    <div class="card">
+      <h4 class="h">إدارة المحتوى داخل الصفحة (بدون تعديل ملفات)</h4>
+      <p class="muted">أضف أعمالك هنا، ثم <b>صدّر</b> ملف <code>portfolio.json</code> وضعه بجانب <code>index.html</code> عند الرفع على الاستضافة. لاحقاً يمكنك <b>استيراد</b> نفس الملف لتعديل أو إضافة أعمال جديدة — كل ذلك من داخل الموقع.</p>
+
+      <div class="admin">
+        <div class="row">
+          <input id="workTitle" type="text" placeholder="عنوان العمل (مثال: شعار 3D للمتجر)"/>
+          <input id="workTag" type="text" placeholder="التصنيف / الوسم (Logo, Mockup, Web)"/>
+        </div>
+        <textarea id="workDesc" rows="2" placeholder="وصف مختصر"></textarea>
+        <div class="row inline">
+          <input id="fileInput" type="file" multiple accept="image/*,video/*"/>
+          <button id="addBtn" class="btn brand" type="button">إضافة إلى المعرض</button>
+          <button id="exportBtn" class="btn" type="button">تصدير البيانات (portfolio.json)</button>
+          <label class="btn" for="importInput" style="cursor:pointer">استيراد بيانات</label>
+          <input id="importInput" type="file" accept="application/json" style="display:none"/>
+        </div>
+      </div>
+    </div>
+
+    <div id="gallery" class="gallery" aria-live="polite"></div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <div class="row" style="justify-content:space-between">
+        <span>© <span id="year"></span> Zynovia — كل الحقوق محفوظة</span>
+        <span class="muted">مبني بملف واحد: <code>index.html</code></span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Smooth scroll (يدعم RTL)
+    document.querySelectorAll('a[href^="#"]').forEach(a=>{
+      a.addEventListener('click', e=>{
+        const id = a.getAttribute('href').slice(1);
+        const el = document.getElementById(id);
+        if(el){ e.preventDefault(); el.scrollIntoView({behavior:'smooth', block:'start'}); }
+      });
+    });
+
+    // 3D tilt for cards
+    const tilts = document.querySelectorAll('.tilt');
+    tilts.forEach(card=>{
+      card.addEventListener('mousemove', (e)=>{
+        const r = card.getBoundingClientRect();
+        const x = (e.clientX - r.left) / r.width; // 0..1
+        const y = (e.clientY - r.top) / r.height;
+        const rx = (y - .5) * -12; // tilt X
+        const ry = (x - .5) * 12;  // tilt Y
+        card.style.transform = `perspective(900px) rotateX(${rx}deg) rotateY(${ry}deg)`;
+      });
+      card.addEventListener('mouseleave', ()=> card.style.transform = 'perspective(900px) rotateX(0) rotateY(0)');
+    });
+
+    // Portfolio state
+    const state = { items: [] };
+    const gallery = document.getElementById('gallery');
+
+    function render(){
+      gallery.innerHTML = '';
+      if(state.items.length === 0){
+        const empty = document.createElement('div');
+        empty.className = 'card';
+        empty.innerHTML = '<p class="muted">لا توجد أعمال حتى الآن. أضف ملفات صور/فيديو ثم اضغط "إضافة إلى المعرض".</p>';
+        gallery.appendChild(empty);
+        return;
+      }
+      state.items.forEach((it, idx)=>{
+        const card = document.createElement('article');
+        card.className = 'work tilt';
+        const media = it.type.startsWith('video/')
+          ? `<video src="${it.src}" controls playsinline></video>`
+          : `<img src="${it.src}" alt="${it.title || 'عمل'}" loading="lazy"/>`;
+        card.innerHTML = `
+          ${media}
+          <div class="meta">
+            <h4>${it.title || 'عمل بدون عنوان'}</h4>
+            <p>${it.desc || ''}</p>
+            ${it.tag ? `<span class="chip">${it.tag}</span>` : ''}
+          </div>`;
+        // simple remove on dblclick
+        card.title = 'نقرتان للحذف';
+        card.addEventListener('dblclick', ()=>{ if(confirm('حذف هذا العمل؟')){ state.items.splice(idx,1); render(); }});
+        gallery.appendChild(card);
+      });
+    }
+
+    // Add items from input
+    const fileInput = document.getElementById('fileInput');
+    const addBtn = document.getElementById('addBtn');
+    const titleEl = document.getElementById('workTitle');
+    const descEl = document.getElementById('workDesc');
+    const tagEl = document.getElementById('workTag');
+
+    addBtn.addEventListener('click', async ()=>{
+      const files = Array.from(fileInput.files || []);
+      if(files.length === 0){ alert('اختر ملفات صور/فيديو أولاً'); return; }
+      for(const f of files){
+        const src = await readAsDataURL(f); // يحفظ داخل JSON كـ base64
+        state.items.push({
+          title: titleEl.value.trim(),
+          desc: descEl.value.trim(),
+          tag: tagEl.value.trim(),
+          type: f.type,
+          src
+        });
+      }
+      // تفريغ المدخلات
+      fileInput.value = '';
+      render();
+    });
+
+    function readAsDataURL(file){
+      return new Promise((res, rej)=>{
+        const reader = new FileReader();
+        reader.onload = ()=> res(reader.result);
+        reader.onerror = rej;
+        reader.readAsDataURL(file);
+      });
+    }
+
+    // Export JSON
+    document.getElementById('exportBtn').addEventListener('click', ()=>{
+      const data = { version:1, generatedAt: new Date().toISOString(), items: state.items };
+      const blob = new Blob([JSON.stringify(data, null, 2)], {type:'application/json'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url; a.download = 'portfolio.json'; a.click();
+      URL.revokeObjectURL(url);
+    });
+
+    // Import JSON
+    const importInput = document.getElementById('importInput');
+    importInput.addEventListener('change', async ()=>{
+      const f = importInput.files[0];
+      if(!f) return;
+      try{
+        const text = await f.text();
+        const data = JSON.parse(text);
+        if(Array.isArray(data.items)){
+          state.items = data.items; render();
+        }else{ alert('ملف غير صالح'); }
+      }catch(err){ alert('تعذر قراءة الملف'); }
+      importInput.value = '';
+    });
+
+    // Try auto-load portfolio.json if available next to index.html
+    (async function tryLoad(){
+      try{
+        const r = await fetch('portfolio.json', {cache:'no-store'});
+        if(r.ok){ const data = await r.json(); if(Array.isArray(data.items)){ state.items = data.items; render(); } }
+        else{ render(); }
+      }catch{ render(); }
+    })();
+
+    // Footer year
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
