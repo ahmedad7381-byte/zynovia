@@ -3,6 +3,39 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  /* يجعل القياسات تتصرف بشكل متوقع */
+  *, *::before, *::after { box-sizing: border-box; }
+
+  /* جسم الصفحة مرن ويستخدم وحدات مناسبة لكل الشاشات */
+  html { font-size: 16px; }
+  body { margin:0; font-family: system-ui, Arial, sans-serif; line-height:1.6; }
+
+  /* حاوية بعرض أقصى للتصميم وتوسّط تلقائي */
+  .container { max-width: 1200px; margin: 0 auto; padding: 16px; }
+
+  /* الصور والفيديو لا تتخطى عرض الشاشة */
+  img, video { max-width: 100%; height: auto; display: block; }
+
+  /* شبكة بطاقات مرنة تتكيّف مع الموبايل والديسكتوب */
+  .grid { 
+    display: grid; 
+    gap: 16px; 
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  }
+
+  /* مثال لبطاقة */
+  .card { 
+    background:#111827; color:#e5e7eb; border-radius:14px; padding:16px; 
+    border:1px solid #1f2937;
+  }
+
+  /* عناوين مرنة باستخدام clamp لتناسب جميع الشاشات */
+  h1 { font-size: clamp(1.25rem, 2.5vw, 2rem); margin: 0 0 12px; }
+  p  { font-size: clamp(.95rem, 1.2vw, 1rem); margin: 0 0 10px; }
+</style>
+
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Zynovia — معرض أعمال ثلاثي الأبعاد</title>
@@ -458,6 +491,7 @@
   </script>
 </body>
 </html>
+
 
 
 
